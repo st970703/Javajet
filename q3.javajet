@@ -2,11 +2,11 @@
 <% ExtractorArgument ea = (ExtractorArgument) argument; %>
 <% Class a = (Class) ea.a; %>
 <% Class b = (Class) ea.b; %>
-<% %>
+
 <% Field[] aField = a.getDeclaredFields(); %>
 <% Field[] bField = b.getDeclaredFields(); %>
 <% ArrayList<Field> tempField = new ArrayList<Field>(); %>
-<% %>
+
 <% for( Field af : aField ) { %>
 <% %>
 	<% for( Field bf : bField ) { %>
@@ -14,7 +14,7 @@
 			<% tempField.add(af); %>
 		<% } %>
 	<% } %>
-<% %>
+
 <% } %>
 public class <%= ea.className %> {
 <% for( Field f : tempField ) { %>

@@ -24,7 +24,6 @@ public class Q1Main {
 		
 		tempArry[0] = br.readLine();
 
-		// TODO Assignment 4, question 1.
 		try {
 			Class<?> clazz = Class.forName(tempArry[0]);
 
@@ -54,7 +53,6 @@ public class Q1Main {
 			
 
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -80,7 +78,7 @@ public class Q1Main {
 		for (Method m : methodArray) {
 			if (m.getParameterCount() == 0) {
 				if (Modifier.isPublic(m.getModifiers())) {
-					System.out.println(m.toGenericString());
+					System.out.println(m.toGenericString() );
 				}
 			}
 		}
