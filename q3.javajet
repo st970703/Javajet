@@ -18,6 +18,6 @@
 <% } %>
 public class <%= ea.className %> {
 <% for( Field f : tempField ) { %>
-	<%= f.getType().getSimpleName()+" "+f.getName()+";\n" %>
+	<%= f.toString().split(" ")[0] +" "+ f.getType().getSimpleName()+" "+f.getName()+";\n" %>
 <% } %>
 }
