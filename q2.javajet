@@ -1,0 +1,18 @@
+<%@ jet package="se254.a4.q2" class="ImplementorTemplate" imports = "java.lang.reflect.*" %>
+<% Class c = (Class) argument; %>
+public class <%= c.getSimpleName() %>Implementation implements <%= c.getSimpleName() %> {
+	<% for(Method m : c.getMethods() ) { %>
+		@Override<% Class[] paramTypes = m.getParameterTypes(); %>
+		<%= m.toGenericString().split(" ")[0]+" "+m.getReturnType().getSimpleName()+" "+m.getName()+" (" %><% for(int i = 0; i < paramTypes.length ; i++ ) { %><% if( paramTypes.length >= 2 && i < paramTypes.length-1 ) {%><%=  paramTypes[i].getSimpleName()+" p"+(i+1)+", " %><% } else { %><%=  paramTypes[i].getSimpleName()+" p"+(i+1) %><% } %><% } %> )
+		{	<% if(m.getReturnType().equals(Boolean.TYPE)) { %> 
+			return false;
+			<% } else if (m.getReturnType().equals(Integer.TYPE)) { %>
+			return 0;
+			<% } else if (m.getReturnType().equals(Double.TYPE)) { %>
+			return 0;
+			<% } else if (m.getReturnType().equals(Void.TYPE)) { %>
+			<% } else if (!m.getReturnType().equals(Void.TYPE)) { %>
+			return null;<% } %>
+		}	
+	<%}%>
+}
