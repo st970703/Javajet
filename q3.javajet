@@ -1,21 +1,21 @@
-<%@ jet package="se254.a4.q3" class="ExtractorTemplate" imports = "java.lang.reflect.* java.util.* "  %>
-<% ExtractorArgument ea = (ExtractorArgument) argument; %>
-<% Class a = (Class) ea.a; %>
-<% Class b = (Class) ea.b; %>
+<%@ jet package="se254.a4.q3" class="ExtractorTemplate" imports = "java.lang.reflect.* java.util.* "%>
+<% ExtractorArgument ea = (ExtractorArgument) argument;
+Class a = (Class) ea.a;
+Class b = (Class) ea.b; %>
 
-<% Field[] aField = a.getDeclaredFields(); %>
-<% Field[] bField = b.getDeclaredFields(); %>
-<% ArrayList<Field> tempField = new ArrayList<Field>(); %>
+<% Field[] aField = a.getDeclaredFields();
+Field[] bField = b.getDeclaredFields();
+ArrayList<Field> tempField = new ArrayList<Field>(); %>
 
-<% for( Field af : aField ) { %>
-<% %>
-	<% for( Field bf : bField ) { %>
-		<% if (af.getName().equals(bf.getName()) && af.getType().equals(bf.getType()) ) {%>
-			<% tempField.add(af); %>
-		<% } %>
-	<% } %>
+<% for( Field af : aField ) {
 
-<% } %>
+	for( Field bf : bField ) { 
+		 if (af.getName().equals(bf.getName()) && af.getType().equals(bf.getType()) ) {
+			 tempField.add(af); 
+		 } 
+	 } 
+
+ } %>
 public class <%= ea.className %> {
 <% for( Field f : tempField ) { %>
 	<%= f.toString().split(" ")[0] +" "+ f.getType().getSimpleName()+" "+f.getName()+";\n" %>
