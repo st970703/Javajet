@@ -11,53 +11,66 @@ import java.lang.reflect.*;
  * @author: elee353, Mike Lee.
  */
 public class Q1Main {
-
+	static Class<?> clazz;
+	static Object o;
 	public static void main(String[] args) throws IOException {
 
 		String[] tempArry = new String[100];
-
-		//se254.a4.q1.Counter
-		System.out.println("Full Class Name?");
-		
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
-		
-		tempArry[0] = br.readLine();
+		boolean repeatFlag = true;
 
-		try {
-			Class<?> clazz = Class.forName(tempArry[0]);
+		while (repeatFlag) {
+			try {
+				//while (repeatFlag) {
+				//se254.a4.q1.Counter
+				System.out.println("Full Class Name?");
+				tempArry[0] = br.readLine();
 
-			Object o = clazz.newInstance();
-			
-			printField(clazz, o);
-			
-			printMethod(clazz);
-			
-			// Let the user execute methods
-			while (true) {
-				System.out.println("\nType a method to run:\tOr \"q\" to Quit");
-				
-				String temp = br.readLine(); 
-				if (temp.equals("q")) {
-					break;
-				}
-				
-				Method tempMethod = clazz.getDeclaredMethod(temp);
-				
-				String result = (String) tempMethod.invoke(o);
-				
+				repeatFlag = false;
+				clazz = Class.forName(tempArry[0]);
+				//}			
+				o = clazz.newInstance();
+
 				printField(clazz, o);
-				
-				printMethod(clazz);
-			}
-			
 
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
+				printMethod(clazz);
+
+				// Let the user execute methods
+				while (true) {
+					System.out.println("\nType a method to run:\tOr \"q\" to Quit");
+
+					String temp = br.readLine(); 
+					if (temp.equals("q")) {
+						break;
+					}
+
+					Method tempMethod;
+					try {
+						tempMethod = clazz.getDeclaredMethod(temp);
+
+						String result = (String) tempMethod.invoke(o);
+
+					} catch (NoSuchMethodException e) {
+						System.out.println(e.getMessage()+" doesn't exist!!!");
+					}
+
+					printField(clazz, o);
+
+					printMethod(clazz);
+				}
+
+
+			} catch ( InstantiationException | IllegalAccessException |  SecurityException | IllegalArgumentException | InvocationTargetException e ) {
+				e.printStackTrace();
+			} catch ( ClassNotFoundException cnfe) {
+				repeatFlag = true;
+				System.out.println(cnfe.getMessage()+" doesn't exist!!!");
+			}
 		}
 	}
 
-	private static void printField(Class clazz, Object o) throws IllegalArgumentException, IllegalAccessException {
+	private static void printField(@SuppressWarnings("rawtypes") Class clazz, Object o) throws IllegalArgumentException, IllegalAccessException {
 
 		Field[] fieldArray = clazz.getFields();
 
@@ -70,7 +83,7 @@ public class Q1Main {
 		}
 	}
 
-	private static void printMethod(Class clazz) {
+	private static void printMethod(@SuppressWarnings("rawtypes") Class clazz) {
 		// Print public methods without arguments
 		System.out.println("\nPublic methods without arguments:");
 		Method[] methodArray = clazz.getDeclaredMethods();
